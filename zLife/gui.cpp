@@ -37,12 +37,12 @@ void drawGameFrame() {
 void drawMap(LifeMap& map) {
 
     TCODColor cellColor(0,0,0);
-    for(int i = 0; i < LifeMap.widht; i++) { 
-        for(int j = 0; j < LifeMap.height; j++) {
+    for(int i = 0; i < LifeMap::widht; i++) {
+        for(int j = 0; j < LifeMap::height; j++) {
             switch(map.getCell(i, j)) {
                 case LifeMap::WHITE_CELL: cellColor.r = 255;
-                                          cellColor.g = 255; 
-                                          cellColor.b = 255; 
+                                          cellColor.g = 255;
+                                          cellColor.b = 255;
                                           break;
                 case LifeMap::RED_CELL:   cellColor.r = 255;
                                           cellColor.g = 0;
@@ -50,13 +50,13 @@ void drawMap(LifeMap& map) {
                                           break;
                 case LifeMap::GREEN_CELL: cellColor.r = 0;
                                           cellColor.g = 255;
-                                          cellColor.b = 0; 
+                                          cellColor.b = 0;
                                           break;
                 case LifeMap::BLUE_CELL:  cellColor.r = 0;
                                           cellColor.g = 0;
-                                          cellColor.b = 255; 
+                                          cellColor.b = 255;
                                           break;
-            } 
+            }
             if(map.isLive(i, j))
                 TCODConsole::root->putCharEx(1+i, 1+j, CELL, cellColor, TCODColor::black);
             else
@@ -71,30 +71,30 @@ void drawMap(LifeMap& map, int x, int y, char color) {
     TCODColor cursColor(0,0,0);
     switch(color) {
         case LifeMap::WHITE_CELL: cursColor.r = 255;
-                                  cursColor.g = 255; 
-                                  cursColor.b = 255; 
+                                  cursColor.g = 255;
+                                  cursColor.b = 255;
             break;
         case LifeMap::RED_CELL:   cursColor.r = 255;
             break;
-        case LifeMap::GREEN_CELL: cursColor.g = 255; 
+        case LifeMap::GREEN_CELL: cursColor.g = 255;
             break;
-        case LifeMap::BLUE_CELL:  cursColor.b = 255; 
+        case LifeMap::BLUE_CELL:  cursColor.b = 255;
             break;
-    }   
+    }
 
     TCODColor cellColor(0,0,0);
     switch(map.getCell(x, y)) {
         case LifeMap::WHITE_CELL: cellColor.r = 255;
-                                  cellColor.g = 255; 
-                                  cellColor.b = 255; 
+                                  cellColor.g = 255;
+                                  cellColor.b = 255;
             break;
         case LifeMap::RED_CELL:   cellColor.r = 255;
             break;
-        case LifeMap::GREEN_CELL: cellColor.g = 255; 
+        case LifeMap::GREEN_CELL: cellColor.g = 255;
             break;
-        case LifeMap::BLUE_CELL:  cellColor.b = 255; 
+        case LifeMap::BLUE_CELL:  cellColor.b = 255;
             break;
-    } 
+    }
 
     if(x > -1 && y > -1 && x < LifeMap::widht && y < LifeMap::height)
         if(map.isLive(x, y))
@@ -115,16 +115,17 @@ int MainMenu::showStandartMainMenu() {
     TCODConsole::root->clear();
     drawTitle();
 
-    TCODConsole::root->printLeft(2, 2, TCOD_BKGND_NONE, "LIFE: MAIN MENU");
+    TCODConsole::root->setAlignment(TCOD_LEFT);
+    TCODConsole::root->print(2, 2, "LIFE: MAIN MENU");
 
     int xBegin = 2;
     int yBegin = 5;
 
-    TCODConsole::root->printLeft(xBegin, yBegin, TCOD_BKGND_NONE, "1. NEW GAME");
+    TCODConsole::root->print(xBegin, yBegin, "1. NEW GAME");
     yBegin += 2;
-    TCODConsole::root->printLeft(xBegin, yBegin, TCOD_BKGND_NONE, "2. LOAD GAME (BLOCK)");
-    yBegin += 2;   
-    TCODConsole::root->printLeft(xBegin, yBegin, TCOD_BKGND_NONE, "3. EXIT GAME");
+    TCODConsole::root->print(xBegin, yBegin, "2. LOAD GAME (BLOCK)");
+    yBegin += 2;
+    TCODConsole::root->print(xBegin, yBegin, "3. EXIT GAME");
     TCODConsole::root->flush();
 
     while(true) {
@@ -143,25 +144,27 @@ void gameMenu::drawGameHelp(char color) {
     int xBegin = 2;
     int yBegin = LifeMap::height + 3;
 
-    TCODConsole::root->printLeft(xBegin, yBegin, TCOD_BKGND_NONE, "%c%c%c%c%c%s",
-                                                                '[', 
-                                                                TCOD_CHAR_ARROW_W, 
+    TCODConsole::root->setAlignment(TCOD_LEFT);
+    TCODConsole::root->print(xBegin, yBegin, "%c%c%c%c%c%s",
+                                                                '[',
+                                                                TCOD_CHAR_ARROW_W,
                                                                 TCOD_CHAR_ARROW_N,
                                                                 TCOD_CHAR_ARROW_S,
                                                                 TCOD_CHAR_ARROW_E,
                                                                 "]  - move");
-    TCODConsole::root->printLeft(xBegin, yBegin+2, TCOD_BKGND_NONE, "[SPACE] - set/remove cell");
-    TCODConsole::root->printLeft(xBegin, yBegin+4, TCOD_BKGND_NONE, "[s]     - save");
-    TCODConsole::root->printLeft(xBegin, yBegin+6, TCOD_BKGND_NONE, "[ENTER] - run game");
-    TCODConsole::root->printLeft(xBegin, yBegin+8, TCOD_BKGND_NONE, "[q]     - quit");
+    TCODConsole::root->print(xBegin, yBegin+2, "[SPACE] - set/remove cell");
+    TCODConsole::root->print(xBegin, yBegin+4, "[s]     - save");
+    TCODConsole::root->print(xBegin, yBegin+6, "[ENTER] - run game");
+    TCODConsole::root->print(xBegin, yBegin+8, "[q]     - quit");
 
     xBegin = windowWidht - 2;
     yBegin = LifeMap::height + 4;
 
-    TCODConsole::root->printRight(xBegin, yBegin, TCOD_BKGND_SET,   "[w] -%c white %c   ", TCOD_COLCTRL_1, TCOD_COLCTRL_STOP);
-    TCODConsole::root->printRight(xBegin, yBegin+2, TCOD_BKGND_SET, "[r] -%c red %c     ", TCOD_COLCTRL_2, TCOD_COLCTRL_STOP);
-    TCODConsole::root->printRight(xBegin, yBegin+4, TCOD_BKGND_SET, "[g] -%c green %c   ", TCOD_COLCTRL_3, TCOD_COLCTRL_STOP);
-    TCODConsole::root->printRight(xBegin, yBegin+6, TCOD_BKGND_SET, "[b] -%c blue %c    ", TCOD_COLCTRL_4, TCOD_COLCTRL_STOP);
+    TCODConsole::root->setAlignment(TCOD_RIGHT);
+    TCODConsole::root->print(xBegin, yBegin,   "[w] -%c white %c   ", TCOD_COLCTRL_1, TCOD_COLCTRL_STOP);
+    TCODConsole::root->print(xBegin, yBegin+2, "[r] -%c red %c     ", TCOD_COLCTRL_2, TCOD_COLCTRL_STOP);
+    TCODConsole::root->print(xBegin, yBegin+4, "[g] -%c green %c   ", TCOD_COLCTRL_3, TCOD_COLCTRL_STOP);
+    TCODConsole::root->print(xBegin, yBegin+6, "[b] -%c blue %c    ", TCOD_COLCTRL_4, TCOD_COLCTRL_STOP);
 
     TCODConsole::root->flush();
 }
@@ -170,32 +173,36 @@ void gamePlay::showGamePlayInfo(int step, LifeMap& gameMap) {
     clearHelp();
 
     int xBegin = 2;
-    int yBegin = LifeMap::height + 3;   
+    int yBegin = LifeMap::height + 3;
 
-    TCODConsole::root->printLeft(xBegin, yBegin,   TCOD_BKGND_NONE, "Living cells: %i", gameMap.liveCellsNumber());
-    TCODConsole::root->printLeft(xBegin, yBegin+2, TCOD_BKGND_NONE, "          W = %i", gameMap.liveWhiteCellsNumber()); 
-    TCODConsole::root->printLeft(xBegin, yBegin+4, TCOD_BKGND_NONE, "          %cR%c = %i",
-                                                     TCOD_COLCTRL_2, TCOD_COLCTRL_STOP, gameMap.liveRedCellsNumber()); 
-    TCODConsole::root->printLeft(xBegin, yBegin+6, TCOD_BKGND_NONE, "          %cG%c = %i",
-                                                     TCOD_COLCTRL_3, TCOD_COLCTRL_STOP, gameMap.liveGreenCellsNumber()); 
-    TCODConsole::root->printLeft(xBegin, yBegin+8, TCOD_BKGND_NONE, "          %cB%c = %i",
-                                                     TCOD_COLCTRL_4, TCOD_COLCTRL_STOP, gameMap.liveBlueCellsNumber()); 
+    TCODConsole::root->setAlignment(TCOD_LEFT);
+    TCODConsole::root->print(xBegin, yBegin, "Living cells: %i", gameMap.liveCellsNumber());
+    TCODConsole::root->print(xBegin, yBegin+2, "          W = %i", gameMap.liveWhiteCellsNumber());
+    TCODConsole::root->print(xBegin, yBegin+4, "          %cR%c = %i",
+                                                     TCOD_COLCTRL_2, TCOD_COLCTRL_STOP, gameMap.liveRedCellsNumber());
+    TCODConsole::root->print(xBegin, yBegin+6, "          %cG%c = %i",
+                                                     TCOD_COLCTRL_3, TCOD_COLCTRL_STOP, gameMap.liveGreenCellsNumber());
+    TCODConsole::root->print(xBegin, yBegin+8, "          %cB%c = %i",
+                                                     TCOD_COLCTRL_4, TCOD_COLCTRL_STOP, gameMap.liveBlueCellsNumber());
 
     xBegin = windowWidht - 16;
-    TCODConsole::root->printLeft(xBegin, yBegin, TCOD_BKGND_NONE, "Step: %i", step);
+    TCODConsole::root->print(xBegin, yBegin, "Step: %i", step);
     xBegin = windowWidht - 3;
-    TCODConsole::root->printRight(xBegin, yBegin+6, TCOD_BKGND_NONE, "Press [p] for pause", step);
-    TCODConsole::root->printRight(xBegin, yBegin+8, TCOD_BKGND_NONE, "Press ESC for stop ", step);
+
+    TCODConsole::root->setAlignment(TCOD_RIGHT);
+    TCODConsole::root->print(xBegin, yBegin+6, "Press [p] for pause", step);
+    TCODConsole::root->print(xBegin, yBegin+8, "Press ESC for stop ", step);
 }
 
 void gamePlay::showFinish() {
     clearHelp();
 
     int xBegin = 2;
-    int yBegin = LifeMap::height + 3;   
-    
-    TCODConsole::root->printLeft(xBegin, yBegin, TCOD_BKGND_NONE, "GAME OVER!");    
-    TCODConsole::root->printLeft(xBegin, yBegin+2, TCOD_BKGND_NONE, "Press any key for wath score...");
+    int yBegin = LifeMap::height + 3;
+
+    TCODConsole::root->setAlignment(TCOD_LEFT);
+    TCODConsole::root->print(xBegin, yBegin, "GAME OVER!");
+    TCODConsole::root->print(xBegin, yBegin+2, "Press any key for wath score...");
     TCODConsole::root->flush();
 }
 
@@ -204,20 +211,23 @@ void gamePlay::showScore(int step, LifeMap& gameMap) {
 
     int xBegin = 2;
     int yBegin = 2;
-    TCODConsole::root->printLeft(xBegin, yBegin, TCOD_BKGND_NONE, "Game over on %i step", step);
+    TCODConsole::root->setAlignment(TCOD_LEFT);
+    TCODConsole::root->print(xBegin, yBegin, "Game over on %i step", step);
 
-    TCODConsole::root->printLeft(xBegin, yBegin+2,  TCOD_BKGND_NONE, "Max cells on field together: %i", gameMap.maxCellsNumber());
-    TCODConsole::root->printLeft(xBegin, yBegin+4,  TCOD_BKGND_NONE, "                      white: %i", gameMap.maxWhiteCellsNumber()); 
-    TCODConsole::root->printLeft(xBegin, yBegin+6,  TCOD_BKGND_NONE, "                        %cred%c: %i",
-                                                    TCOD_COLCTRL_2, TCOD_COLCTRL_STOP, gameMap.maxRedCellsNumber()); 
-    TCODConsole::root->printLeft(xBegin, yBegin+8,  TCOD_BKGND_NONE, "                      %cgreen%c: %i",
-                                                    TCOD_COLCTRL_3, TCOD_COLCTRL_STOP, gameMap.maxGreenCellsNumber()); 
-    TCODConsole::root->printLeft(xBegin, yBegin+10, TCOD_BKGND_NONE, "                       %cblue%c: %i",
-                                                    TCOD_COLCTRL_4, TCOD_COLCTRL_STOP, gameMap.maxBlueCellsNumber()); 
+    TCODConsole::root->print(xBegin, yBegin+2, "Max cells on field together: %i", gameMap.maxCellsNumber());
+    TCODConsole::root->print(xBegin, yBegin+4, "                      white: %i", gameMap.maxWhiteCellsNumber());
+    TCODConsole::root->print(xBegin, yBegin+6, "                        %cred%c: %i",
+                                                    TCOD_COLCTRL_2, TCOD_COLCTRL_STOP, gameMap.maxRedCellsNumber());
+    TCODConsole::root->print(xBegin, yBegin+8, "                      %cgreen%c: %i",
+                                                    TCOD_COLCTRL_3, TCOD_COLCTRL_STOP, gameMap.maxGreenCellsNumber());
+    TCODConsole::root->print(xBegin, yBegin+10, "                       %cblue%c: %i",
+                                                    TCOD_COLCTRL_4, TCOD_COLCTRL_STOP, gameMap.maxBlueCellsNumber());
 
     yBegin = LifeMap::height + helpHeight/2 + 2;
     xBegin = (LifeMap::widht + 1)/2;
-    TCODConsole::root->printCenter(xBegin, yBegin, TCOD_BKGND_NONE, "Press Esc for return to main menu...");
+
+    TCODConsole::root->setAlignment(TCOD_CENTER);
+    TCODConsole::root->print(xBegin, yBegin, "Press Esc for return to main menu...");
     TCODConsole::root->flush();
 }
 
@@ -225,8 +235,9 @@ void gamePlay::showPause() {
     clearHelp();
 
     int xBegin = (windowWidht - 2)/2;
-    int yBegin = LifeMap::height + helpHeight/2 + 2; 
-    
-    TCODConsole::root->printCenter(xBegin, yBegin, TCOD_BKGND_NONE, "Press any key for continue...");
-    TCODConsole::root->flush(); 
+    int yBegin = LifeMap::height + helpHeight/2 + 2;
+
+    TCODConsole::root->setAlignment(TCOD_CENTER);
+    TCODConsole::root->print(xBegin, yBegin, "Press any key for continue...");
+    TCODConsole::root->flush();
 }
